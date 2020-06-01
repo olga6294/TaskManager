@@ -24,12 +24,12 @@ public class TaskController {
     }
 
     @PutMapping("/update/{id}")
-    public void updateTask(@RequestParam("id") int id, @RequestBody Task task){
+    public void updateTask(@PathVariable("id") int id, @RequestBody Task task){
         taskService.update(id, task);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteTask(@RequestParam("id") int id){
+    @DeleteMapping("/delete/{id}")
+    public void deleteTask(@PathVariable("id") int id){
         taskService.delete(id);
     }
 }

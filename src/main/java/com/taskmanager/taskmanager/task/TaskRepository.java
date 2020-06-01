@@ -27,7 +27,7 @@ public class TaskRepository {
     }
 
     public void update(int id, Task task){
-        String sql = String.format("update Task set name = %s, description = %s, dueDate = %s, status = %s where id = %d", task.getName(), task.getDescription(), task.getDueDate(), task.getStatus(), id);
+        String sql = String.format("update Task set name = '%s', description = '%s', dueDate = '%s', status = '%s' where id = %d", task.getName(), task.getDescription(), task.getDueDate(), task.getStatus(), id);
         jdbcTemplate.execute(sql);
     }
 
