@@ -13,11 +13,19 @@ public class TaskService {
         this.taskRepository = taskRepository;
     }
 
-    public List<Task> findAllTasks(){
+    public List<Task> findAll(){
         return taskRepository.findAll();
     }
 
     public void save(Task task){
         taskRepository.save(task);
+    }
+
+    public void update(int id, Task task){
+        taskRepository.update(id, task);
+    }
+
+    public void delete(int id){
+        taskRepository.delete(id);
     }
 }

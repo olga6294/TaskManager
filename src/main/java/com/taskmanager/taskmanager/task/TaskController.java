@@ -15,11 +15,21 @@ public class TaskController {
 
     @GetMapping("/all")
     public List<Task> getTaskList(){
-        return taskService.findAllTasks();
+        return taskService.findAll();
     }
 
     @PostMapping("/newtask")
     public void saveTask(@RequestBody Task task){
         taskService.save(task);
+    }
+
+    @PutMapping("/update/{id}")
+    public void updateTask(@RequestParam("id") int id, @RequestBody Task task){
+        taskService.update(id, task);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteTask(@RequestParam("id") int id){
+        taskService.delete(id);
     }
 }
