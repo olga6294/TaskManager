@@ -18,7 +18,12 @@ public class TaskRepository {
 
     public List<Task> findAll(){
         String sql = "select * from Task";
-        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<Task>(Task.class));
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Task.class));
+    }
+
+    public  List<Task> find(int id){
+        String sql = String.format("select * from Task where id = %d", id);
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Task.class));
     }
 
     public void save(Task task){

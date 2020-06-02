@@ -13,22 +13,27 @@ public class TaskController {
         this.taskService = taskService;
     }
 
-    @GetMapping("/all")
-    public List<Task> getTaskList(){
+    @GetMapping("/task")
+    public List<Task> getTasks(){
         return taskService.findAll();
     }
 
-    @PostMapping("/newtask")
+    @GetMapping("/task/{id}")
+    public List<Task> getTask(@PathVariable("id") int id){
+        return taskService.find(id);
+    }
+
+    @PostMapping("/task")
     public void saveTask(@RequestBody Task task){
         taskService.save(task);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/task/{id}")
     public void updateTask(@PathVariable("id") int id, @RequestBody Task task){
         taskService.update(id, task);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/task/{id}")
     public void deleteTask(@PathVariable("id") int id){
         taskService.delete(id);
     }
