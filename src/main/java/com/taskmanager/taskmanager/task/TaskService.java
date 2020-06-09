@@ -1,35 +1,34 @@
 package com.taskmanager.taskmanager.task;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TaskService {
 
-    private final TaskRepository taskRepository;
+    @Autowired
+    private TaskRepository taskRepository;
 
-    public TaskService(TaskRepository taskRepository) {
-        this.taskRepository = taskRepository;
-    }
+    //public TaskService(TaskRepository taskRepository) {this.taskRepository = taskRepository;}
 
-    public List<Task> findAll(){
+    public Iterable<Task> findAll(){
         return taskRepository.findAll();
     }
 
-    public List<Task> find(int id){
-        return taskRepository.find(id);
+    public Optional<Task> find(int id){
+        return taskRepository.findById(id);
     }
 
     public void save(Task task){
         taskRepository.save(task);
     }
 
-    public void update(int id, Task task){
-        taskRepository.update(id, task);
+    public void update(Task task){
+        taskRepository.save(task);
     }
 
     public void delete(int id){
-        taskRepository.delete(id);
+        taskRepository.deleteById(id);
     }
 }
