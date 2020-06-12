@@ -12,11 +12,10 @@ public class Task {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int Id;
+    private int id;
     private String name;
     private String description;
     private String dueDate;
     private String status;
-    private int id;
 
 }
