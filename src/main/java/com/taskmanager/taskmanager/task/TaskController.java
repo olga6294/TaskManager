@@ -1,7 +1,8 @@
 package com.taskmanager.taskmanager.task;
 
 import org.springframework.web.bind.annotation.*;
-import java.util.Optional;
+
+import java.util.List;
 
 @RestController
 public class TaskController {
@@ -18,8 +19,8 @@ public class TaskController {
     }
 
     @GetMapping("/task/{id}")
-    public Optional<Task> getTask(@PathVariable("id") int id){
-        return taskService.find(id);
+    public List<Task> getTask(@PathVariable("id") int id){
+        return taskService.findById(id);
     }
 
     @PostMapping("/task")
@@ -28,8 +29,8 @@ public class TaskController {
     }
 
     @PutMapping("/task/{id}")
-    public void updateTask(@RequestBody Task task){
-        taskService.update(task);
+    public void updateTask(@RequestBody Task task, @PathVariable int id){
+        taskService.update(id, task);
     }
 
     @DeleteMapping("/task/{id}")
