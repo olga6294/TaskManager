@@ -9,9 +9,11 @@ import java.util.List;
 @Repository
 public class TaskRepository {
 
-    private final JdbcTemplate jdbcTemplate;
+    private final int TASK_STATUS_PLANNED_ID = 1;
+    private final int TASK_STATUS_RESOLVED_ID = 4;
+    private final int TASK_STATUS_DELETED_ID = 5;
 
-    private final String TASK_STATUS_PLANNED_ID = "1";
+    private final JdbcTemplate jdbcTemplate;
 
     public TaskRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -27,7 +29,7 @@ public class TaskRepository {
     }
 
     public void save(Task task){
-        String sql = String.format("INSERT INTO Task(name, description, dueDate, statusId) VALUES ('%s', '%s', '%s', '%s')", task.getName(), task.getDescription(), task.getDueDate(), TASK_STATUS_PLANNED_ID);
+        String sql = String.format("INSERT INTO Task(name, description, dueDate, statusId) VALUES ('%s', '%s', '%s', %d)", task.getName(), task.getDescription(), task.getDueDate(), TASK_STATUS_PLANNED_ID);
         jdbcTemplate.execute(sql);
     }
 
@@ -36,7 +38,12 @@ public class TaskRepository {
     }
 
     public void deleteById(int id){
-        String sql = String.format("DELETE FROM Task WHERE id = %d", id);
+        String sql = String.format("UPDATE Task SET statusId = %d WHERE id = %d", TASK_STATUS_DELETED_ID, id);
+        jdbcTemplate.execute(sql);
+    }
+
+    public void resolve(int id){
+        String sql = String.format("UPDATE Task SET statusId  = %d WHERE id = %d", TASK_STATUS_RESOLVED_ID, id);
         jdbcTemplate.execute(sql);
     }
 }
