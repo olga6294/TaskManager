@@ -8,19 +8,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class SettingsController {
 
-    private final SettingsRepository settingsRepository;
+    private final SettingsService settingsService;
 
-    public SettingsController(SettingsRepository settingsRepository) {
-        this.settingsRepository = settingsRepository;
+    public SettingsController(SettingsService settingsService) {
+        this.settingsService = settingsService;
     }
 
     @GetMapping("/settings")
-    public Iterable<Settings> getSettings(){
-        return settingsRepository.findAll();
+    public Settings getSettings(){
+        return settingsService.find();
     }
 
     @PostMapping("/settings")
     public void saveSettings(@RequestBody Settings settings){
-        settingsRepository.save(settings);
+        settingsService.save(settings);
     }
 }

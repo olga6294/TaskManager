@@ -14,6 +14,7 @@ public class Settings {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String dueDate;
+    private int daysBefore;
+    private int clientId;
 
 }
