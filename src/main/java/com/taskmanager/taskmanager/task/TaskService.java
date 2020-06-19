@@ -28,6 +28,16 @@ public class TaskService {
     }
 
     public void delete(int id){
-        taskRepository.deleteById(id);
+        taskRepository.delete(id);
+    }
+
+    public void solve(int id){ taskRepository.solve(id);}
+
+    public void reopen(int id){
+        taskRepository.reopen(id);
+    }
+
+    public void postpone(Task task){
+        taskRepository.postpone(task);
     }
 }

@@ -1,15 +1,20 @@
 package com.taskmanager.taskmanager.scheduler;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
 
+@Service
 public class Scheduler {
 
-    Logger logger = LoggerFactory.getLogger(Scheduler.class);
+    private final SchedulerRepository schedulerRepository;
 
-    @Scheduled(cron="*/2 * * * *")
+    public Scheduler(SchedulerRepository schedulerRepository) {
+        this.schedulerRepository = schedulerRepository;
+    }
+
+    @Scheduled(cron="* */5 * * * *")
     public void monitorStatus(){
-        logger.info("Teeeeest");
+        schedulerRepository.updateStatusToUpcoming();
+        schedulerRepository.updateStatusToOverdue();
     }
 }

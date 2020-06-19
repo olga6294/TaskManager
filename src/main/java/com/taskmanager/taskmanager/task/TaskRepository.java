@@ -9,16 +9,18 @@ import java.util.List;
 @Repository
 public class TaskRepository {
 
-    private final JdbcTemplate jdbcTemplate;
+    private final String TASK_STATUS_PLANNED = "PLANNED";
+    private final String TASK_STATUS_DONE = "DONE";
+    private final String TASK_STATUS_DELETED = "DELETED";
 
-    private final String TASK_STATUS_PLANNED_ID = "1";
+    private final JdbcTemplate jdbcTemplate;
 
     public TaskRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
     public List<Task> findAll(){
-        return jdbcTemplate.query("SELECT Task.name, Task.description, Task.dueDate, Task.id, Status.status FROM Task JOIN Status ON Task.statusId = Status.id", new BeanPropertyRowMapper<Task>(Task.class));
+        return jdbcTemplate.query("SELECT * FROM Task", new BeanPropertyRowMapper<Task>(Task.class));
     }
 
     public void update(int id, Task task){
@@ -27,7 +29,7 @@ public class TaskRepository {
     }
 
     public void save(Task task){
-        String sql = String.format("INSERT INTO Task(name, description, dueDate, statusId) VALUES ('%s', '%s', '%s', '%s')", task.getName(), task.getDescription(), task.getDueDate(), TASK_STATUS_PLANNED_ID);
+        String sql = String.format("INSERT INTO Task(name, description, dueDate, status) VALUES ('%s', '%s', '%s', '%s')", task.getName(), task.getDescription(), task.getDueDate(), TASK_STATUS_PLANNED);
         jdbcTemplate.execute(sql);
     }
 
@@ -35,8 +37,23 @@ public class TaskRepository {
         return jdbcTemplate.query(String.format("SELECT * FROM Task WHERE id = %s", id), new BeanPropertyRowMapper<Task>(Task.class));
     }
 
-    public void deleteById(int id){
-        String sql = String.format("DELETE FROM Task WHERE id = %d", id);
+    public void delete(int id){
+        String sql = String.format("UPDATE Task SET status = '%s' WHERE id = %d", TASK_STATUS_DELETED, id);
+        jdbcTemplate.execute(sql);
+    }
+
+    public void solve(int id){
+        String sql = String.format("UPDATE Task SET status = '%s' WHERE id = %d", TASK_STATUS_DONE, id);
+        jdbcTemplate.execute(sql);
+    }
+
+    public void reopen(int id){
+        String sql = String.format("UPDATE Task SET status = '%s' WHERE id = %d",TASK_STATUS_PLANNED, id);
+        jdbcTemplate.execute(sql);
+    }
+
+    public void postpone(Task task){
+        String sql = String.format("UPDATE Task SET dueDate = '%s' WHERE id = %d", task.getDueDate(), task.getId());
         jdbcTemplate.execute(sql);
     }
 }

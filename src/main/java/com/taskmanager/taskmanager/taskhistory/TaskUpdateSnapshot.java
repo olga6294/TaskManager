@@ -1,4 +1,4 @@
-package com.taskmanager.taskmanager.task;
+package com.taskmanager.taskmanager.taskhistory;
 
 import lombok.Data;
 import javax.persistence.Entity;
@@ -8,11 +8,12 @@ import javax.persistence.Id;
 
 @Data
 @Entity
-public class Task {
+public class TaskUpdateSnapshot {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    private int taskId;
     private String name;
     private String description;
     private String dueDate;
