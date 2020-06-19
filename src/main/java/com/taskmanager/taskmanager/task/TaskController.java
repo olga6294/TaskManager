@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/task")
 public class TaskController {
 
     private final TaskService taskService;
@@ -13,33 +14,43 @@ public class TaskController {
         this.taskService = taskService;
     }
 
-    @GetMapping("/task")
+    @GetMapping
     public Iterable<Task> getTasks(){
         return taskService.findAll();
     }
 
-    @GetMapping("/task/{id}")
+    @GetMapping("/{id}")
     public List<Task> getTask(@PathVariable("id") int id){
         return taskService.findById(id);
     }
 
-    @PostMapping("/task")
+    @PostMapping
     public void saveTask(@RequestBody Task task){
         taskService.save(task);
     }
 
-    @PutMapping("/task/{id}")
+    @PutMapping("/{id}")
     public void updateTask(@RequestBody Task task, @PathVariable int id){
         taskService.update(id, task);
     }
 
-    @DeleteMapping("/task/{id}")
+    @DeleteMapping("/{id}")
     public void deleteTask(@PathVariable("id") int id){
         taskService.delete(id);
     }
 
-    @PutMapping("resolve/task/{id}")
+    @PutMapping("/{id}/solve")
     public void resolveTask(@PathVariable int id){
-        taskService.resolve(id);
+        taskService.solve(id);
+    }
+
+    @PutMapping("/{id}/reopen")
+    public void reopenTask(@PathVariable int id){
+        taskService.reopen(id);
+    }
+
+    @PutMapping("/{id}/postpone")
+    public void postponeTask(@RequestBody Task task){
+        taskService.postpone(task);
     }
 }

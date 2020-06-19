@@ -12,7 +12,7 @@ public class Scheduler {
         this.schedulerRepository = schedulerRepository;
     }
 
-    @Scheduled(cron="* */1 * * * *")
+    @Scheduled(cron="* */5 * * * *")
     public void monitorStatus(){
         schedulerRepository.updateStatusToUpcoming();
         schedulerRepository.updateStatusToOverdue();

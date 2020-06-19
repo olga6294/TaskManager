@@ -7,8 +7,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class SchedulerRepository {
 
-    private final int OVERDUE_STATUS_ID = 2;
-    private final int UPCOMING_STATUS_ID = 3;
+    private final String TASK_STATUS_OVERDUE = "OVERDUE";
+    private final String TASK_STATUS_UPCOMING = "UPCOMING";
 
     private final JdbcTemplate jdbcTemplate;
     private final UserContext userContext;
@@ -19,12 +19,12 @@ public class SchedulerRepository {
     }
 
     public void updateStatusToUpcoming(){
-        String sql = String.format("UPDATE Task SET statusId = %d WHERE DATEDIFF(dueDate, CURDATE()) <= (SELECT daysBefore FROM Settings WHERE clientId = %d)", UPCOMING_STATUS_ID, userContext.getClientId());
+        String sql = String.format("UPDATE Task SET status = '%s' WHERE DATEDIFF(dueDate, CURDATE()) <= (SELECT daysBefore FROM Settings WHERE clientId = %d)", TASK_STATUS_UPCOMING, userContext.getClientId());
         jdbcTemplate.execute(sql);
     }
 
     public void updateStatusToOverdue(){
-        String sql = String.format("UPDATE Task SET statusId = %d WHERE DATEDIFF(dueDate, CURDATE()) <= -1", OVERDUE_STATUS_ID);
+        String sql = String.format("UPDATE Task SET status = '%s' WHERE DATEDIFF(dueDate, CURDATE()) <= -1", TASK_STATUS_OVERDUE);
         jdbcTemplate.execute(sql);
     }
 
