@@ -21,7 +21,7 @@ public class TaskUpdateController {
     }
 
     @GetMapping("/{id}")
-    public Iterable<TaskUpdateSnapshot> findAllByTaskId(@PathVariable int taskId){
-        return taskUpdateService.findAllByTaskId(taskId);
+    public Iterable<TaskUpdateSnapshot> findAllByTaskId(@PathVariable int id){
+        return taskUpdateService.findAllByTaskId(id);
     }
 }
