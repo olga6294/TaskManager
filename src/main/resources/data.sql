@@ -1,0 +1,7 @@
+CREATE TABLE TASK (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(25) NOT NULL,
+  description VARCHAR(50),
+  dueDate DATE,
+  status VARCHAR(15)
+);
