@@ -51,7 +51,7 @@ public class TaskRepository {
                     resultSet.getInt("id"),
                     resultSet.getString("name"),
                     resultSet.getString("description"),
-                    resultSet.getString("dueDate"),
+                    resultSet.getString("dueDate"), //to jest bez sensu bo data nie powinna być Stringiem
                     resultSet.getString("status")
             );
     }
