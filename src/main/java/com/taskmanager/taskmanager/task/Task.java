@@ -1,9 +1,13 @@
 package com.taskmanager.taskmanager.task;
 
+import com.taskmanager.taskmanager.location.Location;
+import lombok.Data;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+@Data
 public class Task {
 
     @Id
@@ -13,32 +17,6 @@ public class Task {
     private String description;
     private String dueDate;
     private String status;
+    private Location location;
 
-    public Task(int id, String name, String description, String dueDate, String status) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.dueDate = dueDate;
-        this.status = status;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getDueDate() {
-        return dueDate;
-    }
-
-    public String getStatus() {
-        return status;
-    }
 }
